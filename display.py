@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 def display_norm(matrix):
     matrix -= matrix.min()
     matrix /= matrix.max()

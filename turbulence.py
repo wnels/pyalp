@@ -1,6 +1,8 @@
 import numpy as np
 from scipy.fft import fft2, fftshift
 
+#==============================================================================
+#==============================================================================
 class kolmogorov_turbulence:
     def __init__(self, cn2, grid):
         self.cn2 = cn2
