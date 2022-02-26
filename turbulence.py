@@ -5,6 +5,7 @@ class kolmogorov_turbulence:
     def __init__(self, cn2, grid):
         self.cn2 = cn2
         self.grid = grid
+
         self.spectrum = 0.033 * self.cn2 * np.power(
             self.grid.k_matrix,
             -11.0/3.0)
