@@ -3,8 +3,8 @@ from scipy.fft import fft2, fftshift
 
 #==============================================================================
 #==============================================================================
-class kolmogorov_turbulence:
-    def __init__(self, cn2, grid):
+class kolmogorov:
+    def __init__(self, grid, cn2):
         self.cn2 = cn2
         self.grid = grid
 

@@ -1,6 +1,8 @@
 import numpy as np
 from scipy.fft import fft2, ifft2, fftshift, ifftshift
 
+#==============================================================================
+#==============================================================================
 class laser_beam:
     def __init__(self, grid, spot_size, wavelength):
         self.grid = grid
