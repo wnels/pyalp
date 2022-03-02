@@ -1,0 +1,16 @@
+{
+    "name": "Atmospheric Laser Propagation in python (pyALP)",
+    "build": {
+      "dockerfile": "../docker/Dockerfile",
+      "context": ".."
+    },
+    "settings": {
+      "terminal.integrated.shell.linux": "/bin/bash",
+      "editor.tabSize": 4,
+      "editor.renderWhitespace": "all",
+      "files.trimTrailingWhitespace": true
+    },
+    "extensions": [
+      "ms-python.python"
+    ]
+}
