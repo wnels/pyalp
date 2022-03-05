@@ -40,7 +40,7 @@ def plot1d(matrix, vector, title=None, file=None, legend=None):
             center = mat.shape[0] // 2
             plt.plot(vector, mat[center, :])
     else:
-        center = mat.shape[0] // 2
+        center = matrix.shape[0] // 2
         plt.plot(vector, matrix[center, :])
 
     plt.xlabel('x [meters]')
