@@ -3,8 +3,8 @@ import numpy as np
 import tqdm
 import yaml
 
-from atmosphere import turbulence, engine
 from beams import beams
+from components import atmosphere, phase_screen
 from diagnostics import display
 from domain import grids
 
@@ -20,8 +20,8 @@ def double_pass_experiment(config_path, instances):
     avg_intensity = np.zeros_like(grid.x_matrix)
     for index in tqdm.tqdm(range(instances)):
         beam = beams.laser_beam(grid, **config['beam'])
-        turb = turbulence.kolmogorov(grid, **config['turbulence']['kolmogorov'])
-        channel = engine.atm_channel(turb, **config['turbulence']['atmosphere'])
+        turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
+        channel = atmosphere.atm_channel(turb, **config['turbulence']['atmosphere'])
         channel.forward(beam)
         channel.backward(beam)
         intensity = beam.get_intensity()

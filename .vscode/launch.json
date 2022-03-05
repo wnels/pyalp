@@ -40,7 +40,7 @@
             "console": "integratedTerminal",
             "args": [
                 "configs/experiment1.yaml",
-                "--instances", "50"]
+                "--instances", "1000"]
         }
     ]
 }

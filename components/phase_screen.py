@@ -1,10 +1,11 @@
-from itertools import count
 import numpy as np
 from scipy.fft import fft2, fftshift
 
 #==============================================================================
 #==============================================================================
 class kolmogorov:
+    #--------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     def __init__(self, grid, cn2):
         self.cn2 = cn2
         self.grid = grid
@@ -16,6 +17,8 @@ class kolmogorov:
 
         self.spectrum[self.spectrum == np.inf] = 0
 
+    #--------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     def get_phase_screen(self, distance):
         noise = \
             np.random.standard_normal((self.grid.count, self.grid.count)) + \
