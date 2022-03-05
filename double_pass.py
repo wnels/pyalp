@@ -16,7 +16,7 @@ def double_pass_experiment(config_path):
     grid = grids.grid_2d(**config['grid'])
     beam = beams.laser_beam(grid, **config['beam'])
     turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
-    channel = atmosphere.atm_channel(turb, **config['turbulence']['atmosphere'])
+    channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
 
     channel.forward(beam, progress_bar=True)
     beam.phase_conjugate()

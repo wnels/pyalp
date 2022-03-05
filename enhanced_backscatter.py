@@ -21,7 +21,7 @@ def double_pass_experiment(config_path, instances):
     for index in tqdm.tqdm(range(instances)):
         beam = beams.laser_beam(grid, **config['beam'])
         turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
-        channel = atmosphere.atm_channel(turb, **config['turbulence']['atmosphere'])
+        channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
         channel.forward(beam)
         channel.backward(beam)
         intensity = beam.get_intensity()
