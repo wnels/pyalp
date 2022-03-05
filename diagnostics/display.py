@@ -3,11 +3,56 @@ import numpy as np
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def display_norm(matrix):
-    matrix -= matrix.min()
-    matrix /= matrix.max()
-    matrix *= 255
-    matrix = matrix.astype(np.uint8)
+def plot2d(matrix, vector, title=None, show=True, file=None, type='space'):
+
+    extent = [vector.min(), vector.max(), vector.min(), vector.max()]
+
     plt.figure()
-    plt.imshow(matrix)
-    plt.show()
+    plt.imshow(matrix, extent=extent)
+    plt.gca().invert_yaxis()
+
+    if type == 'space':
+        plt.xlabel('x [meters]')
+        plt.ylabel('y [meters]')
+
+    if type == 'freq':
+        plt.xlabel('kx [1 / meters]')
+        plt.ylabel('ky [1 / meters]')
+
+    if title:
+        plt.title(title)
+
+    if file:
+        plt.savefig(file)
+
+    if show:
+        plt.show(block=True)
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+def plot1d(matrix, vector, title=None, file=None, legend=None):
+
+    plt.style.use('ggplot')
+    plt.figure()
+
+    if isinstance(matrix, list):
+        for mat in matrix:
+            center = mat.shape[0] // 2
+            plt.plot(vector, mat[center, :])
+    else:
+        center = mat.shape[0] // 2
+        plt.plot(vector, matrix[center, :])
+
+    plt.xlabel('x [meters]')
+    plt.ylabel('normalized intensity [a.u.]')
+
+
+    plt.title(title)
+    plt.legend(legend)
+
+
+    if file:
+        plt.savefig(file)
+        plt.close()
+    else:
+        plt.show(block=True)

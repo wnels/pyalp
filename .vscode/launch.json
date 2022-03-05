@@ -1,0 +1,46 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "vacuum",
+            "type": "python",
+            "request": "launch",
+            "program": "rayleigh_vacuum.py",
+            "console": "integratedTerminal",
+            "args": ["configs/vacuum_test.yaml"]
+        },
+        {
+            "name": "single_pass",
+            "type": "python",
+            "request": "launch",
+            "program": "single_pass.py",
+            "console": "integratedTerminal",
+            "args": ["configs/experiment1.yaml"]
+        },
+        {
+            "name": "double_pass",
+            "type": "python",
+            "request": "launch",
+            "program": "double_pass.py",
+            "console": "integratedTerminal",
+            "args": ["configs/experiment1.yaml"]
+        },
+        {
+            "name": "enhanced_backscatter",
+            "type": "python",
+            "request": "launch",
+            "program": "enhanced_backscatter.py",
+            "console": "integratedTerminal",
+            "args": [
+                "configs/experiment1.yaml",
+                "--instances", "50"]
+        }
+    ]
+}

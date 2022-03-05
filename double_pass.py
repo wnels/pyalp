@@ -8,7 +8,7 @@ from domain import grids
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def single_pass_experiment(config_path):
+def double_pass_experiment(config_path):
 
     with open(args.config_path) as file_stream:
         config = yaml.safe_load(file_stream)
@@ -19,6 +19,9 @@ def single_pass_experiment(config_path):
     channel = engine.atm_channel(turb, **config['turbulence']['atmosphere'])
 
     channel.forward(beam, progress_bar=True)
+    beam.phase_conjugate()
+    channel.backward(beam, progress_bar=True)
+
     intensity = beam.get_intensity()
     display.plot2d(intensity, grid.x_vector)
 
@@ -36,4 +39,4 @@ if __name__ == '__main__':
         help='path to config file')
 
     args = parser.parse_args()
-    single_pass_experiment(args.config_path)
+    double_pass_experiment(args.config_path)

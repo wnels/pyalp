@@ -1,6 +1,6 @@
 grid:
   x_delta: 5.0e-4
-  count: 2048
+  count: 1025
 beam:
   spot_size: 0.05
   wavelength: 1.0e-6
@@ -9,4 +9,4 @@ turbulence:
     cn2: 1.0e-14
   atmosphere:
     distance: 1000
-    phase_screen_count: 4
+    phase_screen_count: 6

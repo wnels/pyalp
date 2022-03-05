@@ -7,10 +7,11 @@ class laser_beam:
     def __init__(self, grid, spot_size, wavelength):
         self.grid = grid
         self.wavelength = wavelength
+        self.spot_size = spot_size
 
         self.x_field = np.exp(
             -np.square(self.grid.r_matrix) /
-            np.square(spot_size))
+            np.square(self.spot_size))
 
     def propagate(self, distance):
         fresnel_phase = np.exp(
@@ -26,6 +27,11 @@ class laser_beam:
     def distort(self, phase):
         distortion = np.exp(1j * self.get_wavenumber() * phase)
         self.x_field = self.x_field * distortion
+
+    def phase_conjugate(self):
+        magnitude = np.abs(self.x_field)
+        phase = np.angle(self.x_field)
+        self.x_field = magnitude * np.exp(-1j * phase)
 
     def get_intensity(self):
         return np.square(np.abs(self.x_field))

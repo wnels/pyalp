@@ -1,3 +1,4 @@
+from audioop import reverse
 import numpy as np
 import tqdm
 
@@ -18,9 +19,10 @@ class atm_channel:
             progress_bar)
 
     def backward(self, beam, progress_bar=False):
+        reverse_phase_screens = list(reversed(self.phase_screens))
         self.__single_pass(
             beam,
-            self.phase_screens.reverse(),
+            reverse_phase_screens,
             progress_bar)
 
     def __single_pass(self, beam, phase_screens, progress_bar):
