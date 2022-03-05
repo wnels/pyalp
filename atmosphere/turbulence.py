@@ -1,3 +1,4 @@
+from itertools import count
 import numpy as np
 from scipy.fft import fft2, fftshift
 
@@ -8,9 +9,12 @@ class kolmogorov:
         self.cn2 = cn2
         self.grid = grid
 
-        self.spectrum = 0.033 * self.cn2 * np.power(
-            self.grid.k_matrix,
-            -11.0/3.0)
+        with np.errstate(divide='ignore'):
+            self.spectrum = 0.033 * self.cn2 * np.power(
+                self.grid.k_matrix,
+                -11.0/3.0)
+
+        self.spectrum[self.spectrum == np.inf] = 0
 
     def get_phase_screen(self, distance):
         noise = \
