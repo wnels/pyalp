@@ -43,7 +43,9 @@ def plot1d(matrix, vector, title=None, file=None, legend=None):
     plt.xlabel('x [meters]')
     plt.ylabel('normalized intensity [a.u.]')
     plt.title(title)
-    plt.legend(legend)
+
+    if legend:
+        plt.legend(legend)
 
     if file:
         plt.savefig(file)

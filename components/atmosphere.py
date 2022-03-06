@@ -35,5 +35,5 @@ class channel:
         disable_pbar = not progress_bar
         for phase_screen in tqdm.tqdm(phase_screens, disable=disable_pbar):
             beam.propagate(self.screen_distance / 2.0)
-            beam.distort(phase_screen)
+            beam.distort(phase=phase_screen)
             beam.propagate(self.screen_distance / 2.0)

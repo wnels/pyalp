@@ -24,8 +24,8 @@ class laser_beam:
         k_field *= fresnel_phase
         self.x_field = ifft2(ifftshift(k_field))
 
-    def distort(self, phase):
-        distortion = np.exp(1j * self.get_wavenumber() * phase)
+    def distort(self, amplitude=1, phase=0):
+        distortion = amplitude * np.exp(1j * self.get_wavenumber() * phase)
         self.x_field = self.x_field * distortion
 
     def phase_conjugate(self):
