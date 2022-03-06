@@ -38,3 +38,8 @@ class laser_beam:
 
     def get_wavenumber(self):
         return 2.0 * np.pi / self.wavelength
+
+    def get_on_axis_intensity(self):
+        return np.abs(self.x_field[
+            self.grid.count // 2,
+            self.grid.count // 2])**2
