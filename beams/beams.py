@@ -3,7 +3,7 @@ from scipy.fft import fft2, ifft2, fftshift, ifftshift
 
 #==============================================================================
 #==============================================================================
-class laser_beam:
+class gaussian:
     def __init__(self, grid, spot_size, wavelength):
         self.grid = grid
         self.wavelength = wavelength

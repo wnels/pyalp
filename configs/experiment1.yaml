@@ -6,9 +6,14 @@ beam:
   wavelength: 1.0e-6
 turbulence:
   kolmogorov:
-    cn2: 1.0e-13
+    cn2: 1.0e-14
   atmosphere:
-    distance: 2500
+    distance: 2000
     phase_screen_count: 4
 lens:
   focal_length: 0.25
+spatial_light_modulator:
+  element_length: 0.01
+  element_count: 20
+  perturbation_mag: 3.14e-2
+  learning_rate: 1.0e-4

@@ -42,5 +42,15 @@
                 "configs/experiment1.yaml",
                 "--instances", "1000"]
         }
+        {
+            "name": "reciprocity",
+            "type": "python",
+            "request": "launch",
+            "program": "reciprocity.py",
+            "console": "integratedTerminal",
+            "args": [
+                "configs/experiment1.yaml",
+                "--instances", "1000"]
+        }
     ]
 }
