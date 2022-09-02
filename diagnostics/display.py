@@ -25,9 +25,11 @@ def plot2d(matrix, vector, title=None, file=None, type='space'):
 
     if file:
         plt.savefig(file)
+        plt.close()
     else:
         plt.show(block=True)
 
+    plt.clf()
     plt.close()
 
 #------------------------------------------------------------------------------
@@ -57,6 +59,8 @@ def plot1d(matrix, vector, title=None, file=None, legend=None):
 
     if file:
         plt.savefig(file)
-        plt.close()
     else:
         plt.show(block=True)
+
+    plt.clf()
+    plt.close()

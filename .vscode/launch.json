@@ -2,6 +2,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Module",
+            "type": "python",
+            "request": "launch",
+            "module": "tests.rayleigh_vacuum",
+            "justMyCode": true,
+            "args": ["configs/vacuum_test.yaml"]
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
@@ -12,9 +20,21 @@
             "name": "vacuum",
             "type": "python",
             "request": "launch",
-            "program": "rayleigh_vacuum.py",
+            "program": "tests/rayleigh_vacuum.py",
             "console": "integratedTerminal",
-            "args": ["configs/vacuum_test.yaml"]
+            "args": [
+                "configs/vacuum_test.yaml"
+            ]
+        },
+        {
+            "name": "strehl",
+            "type": "python",
+            "request": "launch",
+            "program": "strehl.py",
+            "console": "integratedTerminal",
+            "args": [
+                "configs/experiment1.yaml"
+            ]
         },
         {
             "name": "single_pass",
@@ -22,7 +42,9 @@
             "request": "launch",
             "program": "single_pass.py",
             "console": "integratedTerminal",
-            "args": ["configs/experiment1.yaml"]
+            "args": [
+                "configs/experiment1.yaml"
+            ]
         },
         {
             "name": "double_pass",
@@ -30,7 +52,9 @@
             "request": "launch",
             "program": "double_pass.py",
             "console": "integratedTerminal",
-            "args": ["configs/experiment1.yaml"]
+            "args": [
+                "configs/experiment1.yaml"
+            ]
         },
         {
             "name": "enhanced_backscatter",
@@ -40,8 +64,10 @@
             "console": "integratedTerminal",
             "args": [
                 "configs/experiment1.yaml",
-                "--instances", "1000"]
-        }
+                "--instances",
+                "1000"
+            ]
+        },
         {
             "name": "reciprocity",
             "type": "python",
@@ -50,7 +76,21 @@
             "console": "integratedTerminal",
             "args": [
                 "configs/experiment1.yaml",
-                "--instances", "1000"]
+                "--instances",
+                "1000"
+            ]
+        }
+        {
+            "name": "vacuum test module",
+            "type": "python",
+            "request": "launch",
+            "program": "reciprocity.py",
+            "console": "integratedTerminal",
+            "args": [
+                "configs/experiment1.yaml",
+                "--instances",
+                "1000"
+            ]
         }
     ]
 }

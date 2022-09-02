@@ -4,14 +4,18 @@ from scipy.fft import fft2, ifft2, fftshift, ifftshift
 #==============================================================================
 #==============================================================================
 class gaussian:
-    def __init__(self, grid, spot_size, wavelength):
+    def __init__(self, grid, spot_size, wavelength, radius, focus=np.inf):
         self.grid = grid
         self.wavelength = wavelength
         self.spot_size = spot_size
+        self.focus = focus
 
         self.x_field = np.exp(
-            -np.square(self.grid.r_matrix) /
-            np.square(self.spot_size))
+            -np.square(self.grid.r_matrix) / np.square(self.spot_size)
+            -0.5 * 1j * self.get_wavenumber() *
+            np.square(self.grid.r_matrix) / self.focus)
+
+        self.x_field = self.x_field * (self.grid.r_matrix < radius)
 
     def propagate(self, distance):
         fresnel_phase = np.exp(

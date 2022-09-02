@@ -11,6 +11,7 @@ class channel:
         for _ in range(phase_screen_count):
             screen = turb.get_phase_screen(self.screen_distance)
             self.phase_screens.append(screen)
+        self.reverse_phase_screens = list(reversed(self.phase_screens))
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
@@ -23,10 +24,9 @@ class channel:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
     def backward(self, beam, progress_bar=False):
-        reverse_phase_screens = list(reversed(self.phase_screens))
         self.__single_pass(
             beam,
-            reverse_phase_screens,
+            self.reverse_phase_screens,
             progress_bar)
 
     #--------------------------------------------------------------------------

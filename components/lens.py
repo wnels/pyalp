@@ -21,4 +21,3 @@ class thin_lens:
         grid = grids.grid_2d(x_delta, beam.grid.count)
         beam.x_field = x_field
         beam.grid = grid
-        return beam
