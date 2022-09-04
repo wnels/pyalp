@@ -5,7 +5,7 @@ import tqdm
 import yaml
 
 from pyalp.beams import guassian
-from pyalp.components import atmosphere, lens, phase_screen, spatial_filter, adaptive_optics, surface
+from pyalp.components import atmosphere, lens, phase_screen, reflector, spatial_filter, adaptive_optics
 from pyalp.diagnostics import display
 from pyalp.domain import grids
 
@@ -27,7 +27,7 @@ def reciprocity_experiment(config_path, instances, save_interval=10):
     imaging_lens = lens.thin_lens(**config['lens'])
     turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
     channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
-    target = surface.rough(grid)
+    target = reflector.rough(grid)
     beam = guassian.gaussian(grid, **config['beam'])
 
     gauss_filter = spatial_filter.gaussian(

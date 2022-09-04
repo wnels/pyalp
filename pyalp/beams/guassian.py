@@ -58,6 +58,9 @@ class gaussian:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
     def get_on_axis_intensity(self):
-        return np.abs(self.x_field[
-            self.grid.count // 2,
-            self.grid.count // 2])**2
+        return np.abs(self.get_on_axis_field())**2
+
+    #--------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
+    def get_on_axis_field(self):
+        return self.x_field[self.grid.count // 2, self.grid.count // 2]

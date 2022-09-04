@@ -1,36 +1,38 @@
 import numpy as np
+from scipy.fft import fft2, ifft2, fftshift, ifftshift
+
+from pyalp.components import spatial_filter
 
 #==============================================================================
 #==============================================================================
-class gaussian:
+class rough:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def __init__(self, grid, spot_size, radius, focus=np.inf, wavenumber=0):
-        self.spot_size = spot_size
-        self.grid = grid
-        self.focus = focus
-
-        self.filter = np.exp(
-            -np.square(self.grid.r_matrix) / np.square(self.spot_size)
-            -0.5 * 1j * wavenumber * np.square(self.grid.r_matrix) / self.focus)
-
-        self.filter = self.filter * (grid.r_matrix < radius)
+    def __init__(self, grid):
+        self.phase = np.random.uniform(0, 2 * np.pi, (grid.count, grid.count))
+        self.k_filter = grid.r_matrix < (grid.count / 8 * grid.x_delta)
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
     def propagate(self, beam):
-        beam.x_field = self.filter * beam.x_field
+        beam.x_field = beam.x_field * np.exp(1j * self.phase)
+
+        beam.x_field =\
+            ifft2(ifftshift(fftshift(fft2(beam.x_field)) * self.k_filter))
+
+    def get_phasor(self):
+        return np.exp(1j * self.phase)
 
 #==============================================================================
 #==============================================================================
-class tophat:
+class cornercube:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
     def __init__(self, grid, radius):
-
-        self.filter = grid.r_matrix < radius
+        self.aperture = spatial_filter.tophat(grid, radius)
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
     def propagate(self, beam):
-        beam.x_field = self.filter * beam.x_field
+        self.aperture.propagate(beam)
+        beam.x_field = np.rot90(beam.x_field, 2)

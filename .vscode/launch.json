@@ -3,19 +3,30 @@
     "configurations":
     [
         {
-            "name": "Vacuum Rayleigh Test",
+            "name": "TEST: Vacuum Rayleigh",
             "type": "python",
             "request": "launch",
             "module": "tests.rayleigh_vacuum",
             "args": ["configs/vacuum_test.yaml"]
         },
         {
-            "name": "Phase Conjugate Test",
+            "name": "TEST: Phase Conjugate",
             "type": "python",
             "request": "launch",
             "module": "tests.phase_conjugation",
             "args": ["configs/phase_conjugate_test.yaml"]
         },
+        {
+            "name": "TEST: Reciprocity",
+            "type": "python",
+            "request": "launch",
+            "module": "tests.reciprocity_test",
+            "args":
+            [
+                "configs/experiment1.yaml",
+                "--instances", "50"
+            ]
+        }
         {
             "name": "Strehl",
             "type": "python",
@@ -37,8 +48,8 @@
             "module": "experiments.enhanced_backscatter",
             "args":
             [
-                "configs/experiment1.yaml",
-                "--instances", "1000"
+                "configs/ebs.yaml",
+                "--instances", "100"
             ]
         },
         {

@@ -1,0 +1,16 @@
+# ebs experiment
+grid:
+  x_delta: 5.0e-4
+  count: 2048
+beam:
+  spot_size: 0.2
+  wavelength: 1.0e-6
+  radius: 0.4
+turbulence:
+  kolmogorov:
+    cn2: 1.0e-14
+  atmosphere:
+    distance: 2500
+    phase_screen_count: 4
+lens:
+  focal_length: 0.25
