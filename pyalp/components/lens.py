@@ -1,9 +1,6 @@
-import numpy as np
 from scipy.fft import fft2, fftshift
 
-import sys
-sys.path.append("..")
-from domain import grids
+from pyalp.domain import grids
 
 #==============================================================================
 #==============================================================================

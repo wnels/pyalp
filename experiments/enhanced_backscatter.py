@@ -3,10 +3,10 @@ import numpy as np
 import tqdm
 import yaml
 
-from beams import beams
-from components import atmosphere, lens, phase_screen
-from diagnostics import display
-from domain import grids
+from pyalp.beams import beams
+from pyalp.components import atmosphere, lens, phase_screen
+from pyalp.diagnostics import display
+from pyalp.domain import grids
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -20,19 +20,19 @@ def double_pass_experiment(config_path, instances):
 
     avg_intensity = np.zeros_like(grid.x_matrix)
     for index in tqdm.tqdm(range(instances)):
-        beam = beams.laser_beam(grid, **config['beam'])
+        beam = beams.gaussian(grid, **config['beam'])
         turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
         channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
 
         channel.forward(beam)
         channel.backward(beam)
-        beam = imaging_lens.focus(beam)
+        imaging_lens.focus(beam)
 
         intensity = beam.get_intensity()
         avg_intensity += intensity
 
-    display.plot2d(avg_intensity, grid.x_vector)
-    display.plot1d(avg_intensity, grid.x_vector)
+    display.plot2d(avg_intensity, grid.x_vector, file='ebs_2d.png')
+    display.plot1d(avg_intensity, grid.x_vector, file='ebs_1d.png')
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

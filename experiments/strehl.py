@@ -2,9 +2,9 @@ import argparse
 import numpy as np
 import yaml
 
-from beams import beams
-from diagnostics import display
-from domain import grids
+from pyalp.beams import beams
+from pyalp.diagnostics import display
+from pyalp.domain import grids
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -23,6 +23,7 @@ def strehl_experiment(config_path):
     display.plot1d(
         [intensity0, intensity1],
         grid.x_vector,
+        file='strehl.png',
         legend=['transmitted', 'target'])
 
     return intensity0, intensity1

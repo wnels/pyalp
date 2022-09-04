@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 import tqdm
 import yaml
 
-from beams import beams
-from components import atmosphere, lens, phase_screen, spatial_filter, adaptive_optics, surface
-from diagnostics import display
-from domain import grids
+from pyalp.beams import beams
+from pyalp.components import atmosphere, lens, phase_screen, spatial_filter, adaptive_optics, surface
+from pyalp.diagnostics import display
+from pyalp.domain import grids
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
