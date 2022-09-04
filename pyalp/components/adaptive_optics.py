@@ -1,9 +1,5 @@
 import numpy as np
 
-import sys
-sys.path.append("..")
-from domain import grids
-
 #==============================================================================
 #==============================================================================
 class spatial_light_modulator:

@@ -14,4 +14,6 @@ class rough:
     #--------------------------------------------------------------------------
     def propagate(self, beam):
         beam.x_field = beam.x_field * np.exp(1j * self.phase)
-        beam.x_field = ifft2(ifftshift(fftshift(fft2(beam.x_field)) * self.k_filter))
+
+        beam.x_field =\
+            ifft2(ifftshift(fftshift(fft2(beam.x_field)) * self.k_filter))
