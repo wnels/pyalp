@@ -14,17 +14,8 @@ usermod -aG sudo developer
 
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-RUN pip install \
-  matplotlib \
-  numpy \
-  pydantic \
-  pyyaml \
-  scipy \
-  tqdm
-
 USER developer
-
 WORKDIR /home/developer
+COPY --chown=developer ./requirements.txt .
 
-COPY --chown=developer . ./pyALP
-
+RUN pip install -r requirements.txt
