@@ -1,6 +1,5 @@
 matplotlib
 numpy
-pydantic
 pyyaml
 scipy
 tqdm

@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.10 AS devel
 
 RUN \
 apt-get update && \
@@ -19,3 +19,18 @@ WORKDIR /home/developer
 COPY --chown=developer ./requirements.txt .
 
 RUN pip install -r requirements.txt
+
+FROM devel AS build-pkg
+
+COPY --chown=developer pyalp ./pyalp
+COPY --chown=developer LICENSE .
+COPY --chown=developer pyproject.toml .
+COPY --chown=developer setup.cfg .
+COPY --chown=developer README.md .
+
+RUN python -m pip install --upgrade build
+RUN python -m build
+
+FROM scratch as pkg
+COPY --from=build-pkg /home/developer/dist /
+
