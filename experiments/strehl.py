@@ -33,7 +33,7 @@ def strehl_experiment(config_path):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
-        description='single pass atmospheric channel simulation')
+        description='utility for computing strhel ratio')
 
     parser.add_argument(
         'config_path',

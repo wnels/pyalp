@@ -39,8 +39,9 @@ def double_pass_experiment(config_path, write_plot):
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(
-        description='single pass atmospheric channel simulation')
+    desc = 'test if phase conjugation at the target results in original beam'
+
+    parser = argparse.ArgumentParser(description=desc)
 
     parser.add_argument(
         'config_path',

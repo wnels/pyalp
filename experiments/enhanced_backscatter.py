@@ -41,7 +41,7 @@ def double_pass_experiment(config_path, instances):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
-        description='single pass atmospheric channel simulation')
+        description='Enhanced backscatter (EBS) experiment')
 
     parser.add_argument(
         'config_path',

@@ -35,8 +35,11 @@ def rayleigh_vacuum_experiment(config_path, write_plot=False):
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(
-        description='single pass atmospheric channel simulation')
+    desc = \
+        'Test vacuum propagation by esnuring that the on-axis intensity ' \
+        'falls to 1/2 the original on-axis intensity at the rayleigh distance'
+
+    parser = argparse.ArgumentParser(description=desc)
 
     parser.add_argument(
         'config_path',

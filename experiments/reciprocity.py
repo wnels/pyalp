@@ -102,8 +102,11 @@ def reciprocity_experiment(config_path, instances, save_interval=10):
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(
-        description='single pass atmospheric channel simulation')
+    desc = \
+        'focus a beam through atmospheric turbulence using a spatial light ' \
+        'modulator (SLM )and stochastic parallel gradient descent (SPGD)'
+
+    parser = argparse.ArgumentParser(description=desc)
 
     parser.add_argument(
         'config_path',
