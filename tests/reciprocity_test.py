@@ -3,7 +3,7 @@ import numpy as np
 import tqdm
 import yaml
 
-from pyalp.beams import guassian
+from pyalp.beams import beams
 from pyalp.components import atmosphere, lens, phase_screen, spatial_filter
 from pyalp.domain import grids
 
@@ -16,7 +16,7 @@ def reciprocity_experiment(config_path, instances, save_interval=10):
 
     grid = grids.grid_2d(**config['grid'])
     imaging_lens = lens.thin_lens(**config['lens'])
-    beam = guassian.gaussian(grid, **config['beam'])
+    beam = beams.gaussian(grid, **config['beam'])
 
     gauss_filter = spatial_filter.gaussian(
         grid,
@@ -38,7 +38,7 @@ def reciprocity_experiment(config_path, instances, save_interval=10):
             turb,
             **config['turbulence']['atmosphere'])
 
-        beam = guassian.gaussian(grid, **config['beam'])
+        beam = beams.gaussian(grid, **config['beam'])
 
         channel.forward(beam)
         target_values[index] = np.sum(np.square(beam.x_field))

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import tqdm
 import yaml
 
-from pyalp.beams import guassian
+from pyalp.beams import beams
 from pyalp.components import atmosphere, lens, phase_screen, reflector, spatial_filter, adaptive_optics
 from pyalp.diagnostics import display
 from pyalp.domain import grids
@@ -28,7 +28,7 @@ def reciprocity_experiment(config_path, instances, save_interval=10):
     turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
     channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
     target = reflector.rough(grid)
-    beam = guassian.gaussian(grid, **config['beam'])
+    beam = beams.gaussian(grid, **config['beam'])
 
     gauss_filter = spatial_filter.gaussian(
         grid,
@@ -50,7 +50,7 @@ def reciprocity_experiment(config_path, instances, save_interval=10):
     for index in tqdm.tqdm(range(instances)):
         slm.new_perturbation()
 
-        beam = guassian.gaussian(grid, **config['beam'])
+        beam = beams.gaussian(grid, **config['beam'])
         slm.propagate_plus(beam)
         channel.forward(beam)
         target.propagate(beam)
@@ -60,7 +60,7 @@ def reciprocity_experiment(config_path, instances, save_interval=10):
         imaging_lens.focus(beam)
         detector_plus = np.sqrt(beam.get_on_axis_intensity())
 
-        beam = guassian.gaussian(grid, **config['beam'])
+        beam = beams.gaussian(grid, **config['beam'])
         slm.propagate_minus(beam)
         channel.forward(beam)
         target.propagate(beam)
@@ -70,7 +70,7 @@ def reciprocity_experiment(config_path, instances, save_interval=10):
         imaging_lens.focus(beam)
         detector_minus = np.sqrt(beam.get_on_axis_intensity())
 
-        beam = guassian.gaussian(grid, **config['beam'])
+        beam = beams.gaussian(grid, **config['beam'])
         slm.update_phase(detector_plus, detector_minus)
         slm.propagate(beam)
         channel.forward(beam)

@@ -2,7 +2,7 @@ import argparse
 import numpy as np
 import yaml
 
-from pyalp.beams import guassian
+from pyalp.beams import beams
 from pyalp.components import atmosphere, phase_screen
 from pyalp.diagnostics import display
 from pyalp.domain import grids
@@ -15,7 +15,7 @@ def double_pass_experiment(config_path, write_plot):
         config = yaml.safe_load(file_stream)
 
     grid = grids.grid_2d(**config['grid'])
-    beam = guassian.gaussian(grid, **config['beam'])
+    beam = beams.gaussian(grid, **config['beam'])
     turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
     channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
 

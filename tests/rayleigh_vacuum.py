@@ -2,7 +2,7 @@ import argparse
 import numpy as np
 import yaml
 
-from pyalp.beams import guassian
+from pyalp.beams import beams
 from pyalp.diagnostics import display
 from pyalp.domain import grids
 
@@ -14,7 +14,7 @@ def rayleigh_vacuum_experiment(config_path, write_plot=False):
         config = yaml.safe_load(file_stream)
 
     grid = grids.grid_2d(**config['grid'])
-    beam = guassian.gaussian(grid, **config['beam'])
+    beam = beams.gaussian(grid, **config['beam'])
 
     rayleigh_length = 0.5 * beam.get_wavenumber() * beam.spot_size**2
 

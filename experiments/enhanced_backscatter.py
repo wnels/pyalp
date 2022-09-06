@@ -3,7 +3,7 @@ import numpy as np
 import tqdm
 import yaml
 
-from pyalp.beams import guassian
+from pyalp.beams import beams
 from pyalp.components import atmosphere, lens, phase_screen, reflector
 from pyalp.diagnostics import display
 from pyalp.domain import grids
@@ -21,7 +21,7 @@ def double_pass_experiment(config_path, instances):
 
     avg_intensity = np.zeros_like(grid.x_matrix)
     for index in tqdm.tqdm(range(instances)):
-        beam = guassian.gaussian(grid, **config['beam'])
+        beam = beams.gaussian(grid, **config['beam'])
         turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
         channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
 
