@@ -1,13 +1,13 @@
-# Atmospheric Laser Propagation Library in Python (pyalp)
+# Python Library for Atmospheric Laser Propagation
 
-A python library to facilitate experiments involving the propgation of laser
-beams thorugh atmospheric turbulence. The library uses the split step phase
-screen approximation described in [1], where flucutations in the refractive
-index of air are conceptualized as two dimensional phase screens. Propagation
-through the atmosphere consists of alternating between propagation through a
-homogenous medium and applying the accummulated phase distortions for the
-correpsonding distance. The split step phase screen approximation is depicted in
-the figure below.
+`pyalp` is a python library to facilitate experiments involving the propgation
+of laser beams thorugh atmospheric turbulence. The library uses the split step
+phase screen approximation described in [1], where flucutations in the
+refractive index of air are conceptualized as two dimensional phase screens.
+Propagation through the atmosphere consists of alternating between propagation
+through a homogenous medium and applying the accummulated phase distortions for
+the correpsonding distance. The split step phase screen approximation is
+depicted in the figure below.
 
 ![Split Step Phase Screen Approximation](docs/phase_screen_appx.png)
 
@@ -71,6 +71,6 @@ A Visual Studio Code development environment is provided in the repository.
 
 [1] W. Nelson, J. P. Palastro, C. C. Davis and P. Sprangle, “Propagation of Bessel and Airy beams through atmospheric turbulence,” J. Opt. Soc. Am. A, 31(3), 603-609 (2014)
 
-[1] W. Nelson, J. P. Palastro, C. Wu, and C. C. Davis, “Enhanced backscatter of optical beams reflected in turbulent air,” J. Opt. Soc. Am. A, 32(7), 1371-1378 (2015)
+[2] W. Nelson, J. P. Palastro, C. Wu, and C. C. Davis, “Enhanced backscatter of optical beams reflected in turbulent air,” J. Opt. Soc. Am. A, 32(7), 1371-1378 (2015)
 
-[1] W. Nelson, J. P. Palastro, C. Wu, and C. C. Davis, “Using an incoherent target return to adaptively focus through atmospheric turbulence”, Optics Letters, 41 (6), (2016)
+[3] W. Nelson, J. P. Palastro, C. Wu, and C. C. Davis, “Using an incoherent target return to adaptively focus through atmospheric turbulence”, Optics Letters, 41 (6), (2016)
