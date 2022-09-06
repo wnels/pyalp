@@ -1,8 +1,9 @@
 {
     "name": "Atmospheric Laser Propagation Library in python (pyALP)",
     "build": {
-      "dockerfile": "../docker/Dockerfile",
-      "context": ".."
+      "dockerfile": "../Dockerfile",
+      "context": "..",
+      "target": "devel"
     },
     "runArgs": [
       "-e", "DISPLAY=${env:DISPLAY}",
@@ -15,6 +16,7 @@
       "files.trimTrailingWhitespace": true
     },
     "extensions": [
-      "ms-python.python"
+      "ms-python.python",
+      "stkb.rewrap"
     ]
 }
