@@ -31,6 +31,7 @@ def plot2d(matrix, vector, title=None, file=None, type='space'):
 
     plt.clf()
     plt.close()
+    plt.rcdefaults()
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -64,3 +65,4 @@ def plot1d(matrix, vector, title=None, file=None, legend=None):
 
     plt.clf()
     plt.close()
+    plt.rcdefaults()
