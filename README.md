@@ -19,7 +19,9 @@ atmospheric turbulence onto a remote rough surface published in [3]. See the
 ## Installation
 
 A pip installable wheel distribution is created during the `pkg` stage of the
-docker build. The `pyalp` library and all dependencies can installed using pip:
+docker build. Alternatively, the wheel file can be downloaded from the
+[releases](https://github.com/wnels/pyalp/releases) section of github. The
+`pyalp` library and all dependencies can installed using pip:
 
 ```
 pip install pyalp-0.1.0-py3-none-any.whl
@@ -43,29 +45,12 @@ channel.forward(beam, progress_bar=True)
 The results of the simulation can be visualized using `pyalp`:
 
 ```python
-pyalp.diagnostics.display.plot1d(beam.get_intensity(), grid.x_vector)
-pyalp.diagnostics.display.plot2d(beam.get_intensity(), grid.x_vector)
+pyalp.display.plot1d(beam.get_intensity(), grid.x_vector)
+pyalp.display.plot2d(beam.get_intensity(), grid.x_vector)
 ```
 
 ![Example 1D plot](docs/example_1d.png)
 ![Example 2D plot](docs/example_2d.png)
-
-## Tests
-
-Tests
-
-## Examples
-
-Examples
-
-## Development Environemnt
-
-A Visual Studio Code development environment is provided in the repository.
-
-### Prequisites
-
-* Docker
-* VS Code
 
 ## References
 
