@@ -7,6 +7,7 @@ from .components import phase_screen
 from .components import reflector
 from .components import spatial_filter
 
+from .diagnostics import diagnostics
 from .diagnostics import display
 
 from .domain import grids
