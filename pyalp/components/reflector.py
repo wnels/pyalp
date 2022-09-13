@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.fft import fft2, ifft2, fftshift, ifftshift
 
-from pyalp.components import spatial_filter
+from ..components import spatial_filter
 
 #==============================================================================
 #==============================================================================
