@@ -20,3 +20,5 @@ spatial_light_modulator:
   element_count: 20
   perturbation_mag: 3.14e-2
   learning_rate: 5.0e-4
+reflector:
+  reflector_type: rough
