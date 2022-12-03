@@ -1,7 +1,6 @@
 from scipy.fft import fft2, fftshift
 
-#from pyalp.domain import grids
-from ..domain import grids
+from pyalp.domain import grids
 
 #==============================================================================
 #==============================================================================
