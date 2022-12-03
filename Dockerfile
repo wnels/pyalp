@@ -32,4 +32,3 @@ RUN python -m build
 
 FROM scratch as pkg
 COPY --from=build-pkg /home/developer/dist /
-

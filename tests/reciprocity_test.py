@@ -9,7 +9,7 @@ from pyalp.domain import grids
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def reciprocity_experiment(config_path, instances, save_interval=10):
+def reciprocity_experiment(config_path, instances):
 
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)
