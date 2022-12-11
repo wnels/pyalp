@@ -63,13 +63,13 @@ class spatial_light_modulator_spgd(spatial_light_modulator):
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def propagate_plus(self, beam):
-        beam.x_field = beam.x_field * np.exp(1j * self.get_phase_grid_plus())
-
-    #--------------------------------------------------------------------------
-    #--------------------------------------------------------------------------
-    def propagate_minus(self, beam):
-        beam.x_field = beam.x_field * np.exp(1j * self.get_phase_grid_minus())
+    def apply_perturbation(self, operation):
+        if operation == '+':
+            self.phases += self.perturbations
+        elif operation == '-':
+            self.phases -= self.perturbations
+        else:
+            raise Exception(f"operation {operation} not supported")
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
@@ -77,16 +77,6 @@ class spatial_light_modulator_spgd(spatial_light_modulator):
         size = (self.element_count, self.element_count)
         self.perturbations = np.random.randint(-1, 2, size).astype(np.float64)
         self.perturbations *= self.perturbation_mag
-
-    #--------------------------------------------------------------------------
-    #--------------------------------------------------------------------------
-    def get_phase_grid_plus(self):
-        return self.get_phase_grid(self.phases + self.perturbations)
-
-    #--------------------------------------------------------------------------
-    #--------------------------------------------------------------------------
-    def get_phase_grid_minus(self):
-        return self.get_phase_grid(self.phases - self.perturbations)
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
