@@ -1,6 +1,7 @@
 import argparse
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 import tqdm
 import yaml
 
@@ -18,7 +19,20 @@ def save(target_intensity, slm, metric, index):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def reciprocity_experiment(config_path, instances, save_interval):
+def double_pass(beam, slm, channel, target, gauss_filter, imaging_lens):
+    slm.propagate(beam)
+    channel.forward(beam)
+    target_intensity = beam.get_intensity()
+    target.propagate(beam)
+    channel.backward(beam)
+    slm.propagate(beam)
+    gauss_filter.propagate(beam)
+    imaging_lens.focus(beam)
+    return np.sqrt(beam.get_on_axis_intensity()), target_intensity
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+def reciprocity_experiment(config_path, instances, save_dir, save_interval):
 
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)
@@ -47,40 +61,33 @@ def reciprocity_experiment(config_path, instances, save_interval):
 
     channel.forward(beam)
 
+    optical_config = {
+        "slm": slm,
+        "channel": channel,
+        "target": target,
+        "gauss_filter": gauss_filter,
+        "imaging_lens": imaging_lens}
+
+    if save_dir:
+        os.makedirs(save_dir, exist_ok=True)
+        np.save(os.path.join(save_dir, 'x_vector.npy'), grid.x_vector)
+
     for index in tqdm.tqdm(range(instances)):
         slm.new_perturbation()
 
-        beam = beams.gaussian(grid, **config['beam'])
-        slm.propagate_plus(beam)
-        channel.forward(beam)
-        target.propagate(beam)
-        channel.backward(beam)
-        slm.propagate_plus(beam)
-        gauss_filter.propagate(beam)
-        imaging_lens.focus(beam)
-        detector_plus = np.sqrt(beam.get_on_axis_intensity())
+        optical_config['beam'] = beams.gaussian(grid, **config['beam'])
+        optical_config['slm'].apply_perturbation('+')
+        detector_plus, _ = double_pass(**optical_config)
+        optical_config['slm'].apply_perturbation('-')
 
-        beam = beams.gaussian(grid, **config['beam'])
-        slm.propagate_minus(beam)
-        channel.forward(beam)
-        target.propagate(beam)
-        channel.backward(beam)
-        slm.propagate_minus(beam)
-        gauss_filter.propagate(beam)
-        imaging_lens.focus(beam)
-        detector_minus = np.sqrt(beam.get_on_axis_intensity())
+        optical_config['beam'] = beams.gaussian(grid, **config['beam'])
+        optical_config['slm'].apply_perturbation('-')
+        detector_minus, _ = double_pass(**optical_config)
+        optical_config['slm'].apply_perturbation('+')
 
-        beam = beams.gaussian(grid, **config['beam'])
-        slm.update_phase(detector_plus, detector_minus)
-        slm.propagate(beam)
-        channel.forward(beam)
-        target_intensity = beam.get_intensity()
-        target.propagate(beam)
-        channel.backward(beam)
-        slm.propagate(beam)
-        gauss_filter.propagate(beam)
-        imaging_lens.focus(beam)
-        detector_value = np.sqrt(beam.get_on_axis_intensity())
+        optical_config['beam'] = beams.gaussian(grid, **config['beam'])
+        optical_config['slm'].update_phase(detector_plus, detector_minus)
+        detector_value, target_intensity = double_pass(**optical_config)
 
         detector_plus_values.append(detector_plus)
         detector_minus_values.append(detector_minus)
@@ -121,6 +128,12 @@ if __name__ == '__main__':
         help='number of independent turbulent channels to average')
 
     parser.add_argument(
+        '--save-dir',
+        type=str,
+        default=None,
+        help='directory to save results')
+
+    parser.add_argument(
         '--save-interval',
         type=int,
         default=0,
@@ -131,4 +144,5 @@ if __name__ == '__main__':
     reciprocity_experiment(
         args.config_path,
         args.instances,
+        args.save_dir,
         args.save_interval)
