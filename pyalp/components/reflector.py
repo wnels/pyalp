@@ -8,10 +8,12 @@ from pyalp.components import spatial_filter
 def get_reflector(grid, reflector_type, radius=None):
     if reflector_type.lower() == "mirror":
         return mirror(grid, radius)
-    if reflector_type.lower() == "rough":
+    elif reflector_type.lower() == "rough":
         return rough(grid)
-    if reflector_type.lower() == "cornercube":
+    elif reflector_type.lower() == "cornercube":
         return cornercube(grid, radius)
+    else:
+        raise Exception(f"reflector type {reflector_type} not supported")
 
 #==============================================================================
 #==============================================================================
