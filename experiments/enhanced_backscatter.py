@@ -20,7 +20,7 @@ def double_pass_experiment(config_path, instances):
     cornercube = reflector.cornercube(grid, 0.1)
 
     avg_intensity = np.zeros_like(grid.x_matrix)
-    for index in tqdm.tqdm(range(instances)):
+    for _ in tqdm.tqdm(range(instances)):
         beam = beams.gaussian(grid, **config['beam'])
         turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
         channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])

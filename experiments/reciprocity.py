@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
     desc = \
         'focus a beam through atmospheric turbulence using a spatial light ' \
-        'modulator (SLM )and stochastic parallel gradient descent (SPGD)'
+        'modulator (SLM) and stochastic parallel gradient descent (SPGD)'
 
     parser = argparse.ArgumentParser(description=desc)
 
