@@ -52,6 +52,14 @@ pyalp.display.plot2d(beam.get_intensity(), grid.x_vector)
 ![Example 1D plot](docs/example_1d.png)
 ![Example 2D plot](docs/example_2d.png)
 
+## Experiments
+
+### Using an incoherent target return to adaptively focus through atmospheric turbulence
+
+![Reciprocity Experiment](docs/ReciprocitySetup.png)
+
+![Reciprocity SPGD](docs/ReciprocitySpgd.gif)
+
 ## References
 
 [1] W. Nelson, J. P. Palastro, C. C. Davis and P. Sprangle, “Propagation of Bessel and Airy beams through atmospheric turbulence,” J. Opt. Soc. Am. A, 31(3), 603-609 (2014)
