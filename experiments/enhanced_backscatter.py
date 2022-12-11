@@ -17,7 +17,7 @@ def double_pass_experiment(config_path, instances):
 
     grid = grids.grid_2d(**config['grid'])
     imaging_lens = lens.thin_lens(**config['lens'])
-    cornercube = reflector.cornercube(grid, 0.1)
+    target = reflector.get_reflector(grid, **config['reflector'])
 
     avg_intensity = np.zeros_like(grid.x_matrix)
     for _ in tqdm.tqdm(range(instances)):
@@ -26,13 +26,14 @@ def double_pass_experiment(config_path, instances):
         channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
 
         channel.forward(beam)
-        cornercube.propagate(beam)
+        target.propagate(beam)
         channel.backward(beam)
         imaging_lens.focus(beam)
 
         intensity = beam.get_intensity()
         avg_intensity += intensity
 
+    avg_intensity /= instances
     display.plot2d(avg_intensity, grid.x_vector, file='ebs_2d.png')
     display.plot1d(avg_intensity, grid.x_vector, file='ebs_1d.png')
 

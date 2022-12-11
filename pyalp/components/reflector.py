@@ -3,6 +3,29 @@ from scipy.fft import fft2, ifft2, fftshift, ifftshift
 
 from pyalp.components import spatial_filter
 
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+def get_reflector(grid, reflector_type, radius=None):
+    if reflector_type.lower() == "mirror":
+        return mirror(grid, radius)
+    if reflector_type.lower() == "rough":
+        return rough(grid)
+    if reflector_type.lower() == "cornercube":
+        return cornercube(grid, radius)
+
+#==============================================================================
+#==============================================================================
+class mirror:
+    #--------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
+    def __init__(self, grid, radius):
+        self.aperture = spatial_filter.tophat(grid, radius)
+
+    #--------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
+    def propagate(self, beam):
+        self.aperture.propagate(beam)
+
 #==============================================================================
 #==============================================================================
 class rough:
@@ -15,7 +38,7 @@ class rough:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
     def propagate(self, beam):
-        beam.x_field = beam.x_field * np.exp(1j * self.phase)
+        beam.x_field = beam.x_field * self.get_phasor()
 
         beam.x_field =\
             ifft2(ifftshift(fftshift(fft2(beam.x_field)) * self.k_filter))

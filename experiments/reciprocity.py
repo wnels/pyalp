@@ -18,7 +18,7 @@ def save(target_intensity, slm, metric, index):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def reciprocity_experiment(config_path, instances, save_interval=10):
+def reciprocity_experiment(config_path, instances, save_interval):
 
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)
@@ -27,7 +27,7 @@ def reciprocity_experiment(config_path, instances, save_interval=10):
     imaging_lens = lens.thin_lens(**config['lens'])
     turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
     channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
-    target = reflector.rough(grid)
+    target = reflector.get_reflector(grid, **config['reflector'])
     beam = beams.gaussian(grid, **config['beam'])
 
     gauss_filter = spatial_filter.gaussian(
@@ -37,7 +37,7 @@ def reciprocity_experiment(config_path, instances, save_interval=10):
         config['beam']['focus'],
         beam.get_wavenumber())
 
-    slm = adaptive_optics.spatial_light_modulator(
+    slm = adaptive_optics.spatial_light_modulator_spgd(
         grid,
         **config['spatial_light_modulator'])
 
@@ -91,7 +91,7 @@ def reciprocity_experiment(config_path, instances, save_interval=10):
             detector_plus_values,
             detector_minus_values])
 
-        if index % save_interval == 0:
+        if save_interval > 0 and index % save_interval == 0:
             save(
                 target_intensity,
                 slm.get_phase_grid(),
@@ -120,5 +120,15 @@ if __name__ == '__main__':
         required=True,
         help='number of independent turbulent channels to average')
 
+    parser.add_argument(
+        '--save-interval',
+        type=int,
+        default=0,
+        help='iteration interval to save results')
+
     args = parser.parse_args()
-    reciprocity_experiment(args.config_path, args.instances)
+
+    reciprocity_experiment(
+        args.config_path,
+        args.instances,
+        args.save_interval)
