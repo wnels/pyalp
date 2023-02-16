@@ -9,7 +9,7 @@ class spatial_light_modulator:
         self.grid = grid
         self.element_count = element_count
         self.element_length = element_length
-        self.reset()
+        self.phase = np.zeros(self.get_parameter_count())
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
@@ -19,13 +19,15 @@ class spatial_light_modulator:
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def update_phase(self, phase_perturbations):
-        self.phases += phase_perturbations
+    def update_parameters(self, parameters):
+        self.phases = np.reshape(
+            parameters,
+            (self.element_count, self.element_count))
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def reset(self):
-        self.phases = np.zeros((self.element_count, self.element_count))
+    def get_parameter_count(self):
+        return self.element_count**2
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
@@ -45,43 +47,41 @@ class spatial_light_modulator:
 
 #==============================================================================
 #==============================================================================
-class spatial_light_modulator_spgd(spatial_light_modulator):
+class stochastic_parallel_gradient_descent:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
     def __init__(
         self,
-        grid,
-        element_count,
-        element_length,
+        parameter_count,
         perturbation_mag,
         learning_rate):
 
-        super().__init__(grid, element_count, element_length)
+        self.parameters = np.zeros(parameter_count)
+        self.perturbations = np.zeros(parameter_count)
         self.perturbation_mag = perturbation_mag
         self.learning_rate = learning_rate
-        self.perturbations = np.zeros((self.element_count, self.element_count))
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def apply_perturbation(self, operation):
-        if operation == '+':
-            self.phases += self.perturbations
-        elif operation == '-':
-            self.phases -= self.perturbations
-        else:
-            raise Exception(f"operation {operation} not supported")
+    def get_positive_perturbation(self):
+        return self.parameters + self.perturbations
+
+    #--------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
+    def get_negative_perturbation(self):
+        return self.parameters - self.perturbations
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
     def new_perturbation(self):
-        size = (self.element_count, self.element_count)
-        self.perturbations = np.random.randint(-1, 2, size).astype(np.float64)
+        self.perturbations = np.random.randint(-1, 2, self.parameters.size)
+        self.perturbations = self.perturbations.astype(np.float64)
         self.perturbations *= self.perturbation_mag
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def update_phase(self, plus, minus):
-        self.phases += \
+    def update_parameters(self, plus, minus):
+        self.parameters += \
             self.learning_rate * \
             self.perturbations * \
             (plus - minus) / \

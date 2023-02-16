@@ -6,7 +6,6 @@ beam:
   spot_size: 0.05
   wavelength: 1.0e-6
   radius: 0.2
-  focus: 2500
 turbulence:
   kolmogorov:
     cn2: 1.0e-14
@@ -18,6 +17,7 @@ lens:
 spatial_light_modulator:
   element_length: 0.02
   element_count: 20
+stochastic_parallel_gradient_descent:
   perturbation_mag: 3.14e-2
   learning_rate: 5.0e-4
 reflector:
