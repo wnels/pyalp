@@ -48,12 +48,16 @@ def reciprocity_experiment(config_path, instances, save_dir, save_interval):
         grid,
         config['beam']['spot_size'],
         config['beam']['radius'],
-        config['beam']['focus'],
+        np.inf,
         beam.get_wavenumber())
 
-    slm = adaptive_optics.spatial_light_modulator_spgd(
+    slm = adaptive_optics.spatial_light_modulator(
         grid,
         **config['spatial_light_modulator'])
+
+    spgd = adaptive_optics.stochastic_parallel_gradient_descent(
+        parameter_count=slm.get_parameter_count(),
+        **config['stochastic_parallel_gradient_descent'])
 
     detector_values = []
     detector_plus_values = []
@@ -73,20 +77,19 @@ def reciprocity_experiment(config_path, instances, save_dir, save_interval):
         np.save(os.path.join(save_dir, 'x_vector.npy'), grid.x_vector)
 
     for index in tqdm.tqdm(range(instances)):
-        slm.new_perturbation()
+        spgd.new_perturbation()
 
         optical_config['beam'] = beams.gaussian(grid, **config['beam'])
-        optical_config['slm'].apply_perturbation('+')
+        slm.update_parameters(spgd.get_positive_perturbation())
         detector_plus, _ = double_pass(**optical_config)
-        optical_config['slm'].apply_perturbation('-')
 
         optical_config['beam'] = beams.gaussian(grid, **config['beam'])
-        optical_config['slm'].apply_perturbation('-')
+        slm.update_parameters(spgd.get_negative_perturbation())
         detector_minus, _ = double_pass(**optical_config)
-        optical_config['slm'].apply_perturbation('+')
 
+        spgd.update_parameters(detector_plus, detector_minus)
         optical_config['beam'] = beams.gaussian(grid, **config['beam'])
-        optical_config['slm'].update_phase(detector_plus, detector_minus)
+        slm.update_parameters(spgd.parameters)
         detector_value, target_intensity = double_pass(**optical_config)
 
         detector_plus_values.append(detector_plus)
