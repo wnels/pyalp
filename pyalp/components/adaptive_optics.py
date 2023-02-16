@@ -1,11 +1,18 @@
 import numpy as np
 
+from pyalp.domain import grids
+from pyalp.beams import beams
+
 #==============================================================================
 #==============================================================================
 class SpatialLightModulator:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def __init__(self, grid, element_count, element_length):
+    def __init__(
+      self,
+      grid: grids.Grid2D,
+      element_count: int,
+      element_length: float):
         self.grid = grid
         self.element_count = element_count
         self.element_length = element_length
@@ -13,13 +20,13 @@ class SpatialLightModulator:
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def propagate(self, beam):
+    def propagate(self, beam: beams.Gaussian):
         beam.x_field = beam.x_field * np.exp(1j * self.get_phase_grid())
         return beam
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def update_parameters(self, parameters):
+    def update_parameters(self, parameters: np.ndarray):
         self.phases = np.reshape(
             parameters,
             (self.element_count, self.element_count))

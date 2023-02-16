@@ -8,9 +8,9 @@ from pyalp.domain import grids
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def single_pass_experiment(config_path):
+def single_pass_experiment(config_path: str):
 
-    with open(args.config_path) as file_stream:
+    with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)
 
     grid = grids.Grid2D(**config['grid'])

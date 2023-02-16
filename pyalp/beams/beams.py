@@ -1,12 +1,20 @@
 import numpy as np
 from scipy.fft import fft2, ifft2, fftshift, ifftshift
 
+from pyalp.domain import grids
+
 #==============================================================================
 #==============================================================================
 class Gaussian:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def __init__(self, grid, spot_size, wavelength, radius, focus=np.inf):
+    def __init__(
+      self,
+      grid: grids.Grid2D,
+      spot_size: float,
+      wavelength: float,
+      radius: float,
+      focus: float=np.inf):
         self.grid = grid
         self.wavelength = wavelength
         self.spot_size = spot_size
@@ -21,7 +29,7 @@ class Gaussian:
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def propagate(self, distance):
+    def propagate(self, distance: float):
         fresnel_phase = np.exp(
             -0.5j *
             np.square(self.grid.k_matrix) *
@@ -34,7 +42,7 @@ class Gaussian:
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def distort(self, amplitude=1, phase=0):
+    def distort(self, amplitude: float=1, phase: float=0):
         distortion = amplitude * np.exp(1j * self.get_wavenumber() * phase)
         self.x_field = self.x_field * distortion
 

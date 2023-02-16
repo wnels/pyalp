@@ -9,7 +9,7 @@ from pyalp.domain import grids
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def double_pass_experiment(config_path, write_plot):
+def double_pass_experiment(config_path: str, write_plot: bool):
 
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)

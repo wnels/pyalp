@@ -1,12 +1,14 @@
 import numpy as np
 from scipy.fft import fft2, fftshift
 
+from pyalp.domain import grids
+
 #==============================================================================
 #==============================================================================
 class Kolmogorov:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def __init__(self, grid, cn2):
+    def __init__(self, grid: grids.Grid2D, cn2: float):
         self.cn2 = cn2
         self.grid = grid
 
@@ -19,7 +21,7 @@ class Kolmogorov:
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def get_phase_screen(self, distance):
+    def get_phase_screen(self, distance: float):
         noise = \
             np.random.standard_normal((self.grid.count, self.grid.count)) + \
             1j * np.random.standard_normal((self.grid.count, self.grid.count))

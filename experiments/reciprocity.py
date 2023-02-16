@@ -12,14 +12,24 @@ from pyalp.domain import grids
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def save(target_intensity, slm, metric, index):
+def save(
+  target_intensity: np.ndarray,
+  slm: np.ndarray,
+  metric: np.ndarray,
+  index: int):
     np.save(f'data/target_{index}.npy', target_intensity)
     np.save(f'data/slm_{index}.npy', slm)
     np.save(f'data/J_{index}.npy', metric)
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def double_pass(beam, slm, channel, target, gauss_filter, imaging_lens):
+def double_pass(
+  beam: beams.Gaussian,
+  slm: adaptive_optics.SpatialLightModulator,
+  channel: atmosphere.Channel,
+  target: reflector.Reflector,
+  gauss_filter: spatial_filter.Gaussian,
+  imaging_lens: lens.ThinLens):
     slm.propagate(beam)
     channel.forward(beam)
     target_intensity = beam.get_intensity()
@@ -32,7 +42,11 @@ def double_pass(beam, slm, channel, target, gauss_filter, imaging_lens):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def reciprocity_experiment(config_path, instances, save_dir, save_interval):
+def reciprocity_experiment(
+  config_path: str,
+  instances: int,
+  save_dir: str,
+  save_interval: int):
 
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)

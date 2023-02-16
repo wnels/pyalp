@@ -5,7 +5,7 @@ import numpy as np
 class Grid2D:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def __init__(self, x_delta, count):
+    def __init__(self, x_delta: float, count: int):
         self.count = count
         self.x_delta = x_delta
         self.k_delta = 2 * np.pi / (self.count * self.x_delta)

@@ -1,8 +1,14 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def plot2d(matrix, vector, title=None, file=None, type='space'):
+def plot2d(
+  matrix: np.ndarray,
+  vector: np.ndarray,
+  title: str=None,
+  file: str=None,
+  type: str='space'):
 
     extent = [vector.min(), vector.max(), vector.min(), vector.max()]
 
@@ -34,7 +40,12 @@ def plot2d(matrix, vector, title=None, file=None, type='space'):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def plot1d(matrix, vector, title=None, file=None, legend=None):
+def plot1d(
+  matrix: np.ndarray,
+  vector: np.ndarray,
+  title: str=None,
+  file: str=None,
+  legend: str=None):
 
     plt.style.use('ggplot')
     plt.rcParams.update({'font.size': 16})

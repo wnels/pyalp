@@ -1,11 +1,15 @@
+from abc import ABC, abstractmethod
+
 import numpy as np
 from scipy.fft import fft2, ifft2, fftshift, ifftshift
 
+from pyalp.beams import beams
 from pyalp.components import spatial_filter
+from pyalp.domain import grids
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def get_reflector(grid, reflector_type, radius=None):
+def get_reflector(grid: grids.Grid2D, reflector_type: str, radius: bool=None):
     if reflector_type.lower() == "mirror":
         return Mirror(grid, radius)
     elif reflector_type.lower() == "rough":
@@ -17,15 +21,22 @@ def get_reflector(grid, reflector_type, radius=None):
 
 #==============================================================================
 #==============================================================================
+class Reflector(ABC):
+    @abstractmethod
+    def propagate(self, beam: beams.Gaussian):
+        pass
+
+#==============================================================================
+#==============================================================================
 class Mirror:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def __init__(self, grid, radius):
+    def __init__(self, grid: grids.Grid2D, radius: float):
         self.aperture = spatial_filter.Tophat(grid, radius)
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def propagate(self, beam):
+    def propagate(self, beam: beams.Gaussian):
         self.aperture.propagate(beam)
 
 #==============================================================================
@@ -33,13 +44,13 @@ class Mirror:
 class Rough:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def __init__(self, grid):
+    def __init__(self, grid: grids.Grid2D):
         self.phase = np.random.uniform(0, 2 * np.pi, (grid.count, grid.count))
         self.k_filter = grid.r_matrix < (grid.count / 8 * grid.x_delta)
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def propagate(self, beam):
+    def propagate(self, beam: beams.Gaussian):
         beam.x_field = beam.x_field * self.get_phasor()
 
         beam.x_field =\
@@ -53,11 +64,11 @@ class Rough:
 class Cornercube:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def __init__(self, grid, radius):
+    def __init__(self, grid: grids.Grid2D, radius: float):
         self.aperture = spatial_filter.Tophat(grid, radius)
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
-    def propagate(self, beam):
+    def propagate(self, beam: beams.Gaussian):
         self.aperture.propagate(beam)
         beam.x_field = np.rot90(beam.x_field, 2)

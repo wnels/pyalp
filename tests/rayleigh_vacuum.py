@@ -8,7 +8,7 @@ from pyalp.domain import grids
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def rayleigh_vacuum_experiment(config_path, write_plot=False):
+def rayleigh_vacuum_experiment(config_path: str, write_plot: bool=False):
 
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)

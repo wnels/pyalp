@@ -9,7 +9,7 @@ import tqdm
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def get_x_extent(x_vector, x_limit=0.15):
+def get_x_extent(x_vector: np.ndarray, x_limit: float=0.15):
     idx_min = np.sum(x_vector < -x_limit)
     idx_max = np.sum(x_vector < x_limit)
     x_extent = [-x_limit, x_limit, -x_limit, x_limit]
@@ -17,13 +17,13 @@ def get_x_extent(x_vector, x_limit=0.15):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def extract_number(f):
+def extract_number(f: str):
     s = re.findall("(\d+).npy", f)
     return int(s[0]) if s else -1
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def get_last_file_idx(dir):
+def get_last_file_idx(dir: str):
     files = os.listdir(dir)
     max_file = max(files, key=extract_number)
     last_idx = extract_number(max_file)
@@ -31,7 +31,7 @@ def get_last_file_idx(dir):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def make_frames(dir):
+def make_frames(dir: str):
     x_vector = np.load(os.path.join(dir, "x_vector.npy"))
     idx_min, idx_max, x_extent = get_x_extent(x_vector)
 
@@ -91,7 +91,7 @@ def make_frames(dir):
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def make_gif(dir):
+def make_gif(dir: str):
 
     gif = []
     for file in os.listdir(dir):

@@ -8,7 +8,7 @@ from pyalp.domain import grids
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
-def strehl_experiment(config_path):
+def strehl_experiment(config_path: str):
 
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)
