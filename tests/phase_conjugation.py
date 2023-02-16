@@ -14,10 +14,10 @@ def double_pass_experiment(config_path, write_plot):
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)
 
-    grid = grids.grid_2d(**config['grid'])
+    grid = grids.Grid2D(**config['grid'])
     beam = beams.gaussian(grid, **config['beam'])
-    turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
-    channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
+    turb = phase_screen.Kolmogorov(grid, **config['turbulence']['kolmogorov'])
+    channel = atmosphere.Channel(turb, **config['turbulence']['atmosphere'])
 
     intensity0 = beam.get_intensity()
 

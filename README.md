@@ -35,10 +35,10 @@ shown below.
 ```python
 import pyalp
 
-grid = pyalp.grids.grid_2d(x_delta=2.5e-4, count=2048)
-beam = pyalp.beams.gaussian(grid, spot_size=0.05, wavelength=1e-6, radius=0.2)
-turb = pyalp.phase_screen.kolmogorov(grid, cn2=1e-15)
-channel = pyalp.atmosphere.channel(turb, distance=2000, phase_screen_count=10)
+grid = pyalp.grids.Grid2D(x_delta=2.5e-4, count=2048)
+beam = pyalp.beams.Gaussian(grid, spot_size=0.05, wavelength=1e-6, radius=0.2)
+turb = pyalp.phase_screen.Kolmogorov(grid, cn2=1e-15)
+channel = pyalp.atmosphere.Channel(turb, distance=2000, phase_screen_count=10)
 channel.forward(beam, progress_bar=True)
 ```
 

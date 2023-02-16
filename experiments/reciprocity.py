@@ -37,25 +37,25 @@ def reciprocity_experiment(config_path, instances, save_dir, save_interval):
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)
 
-    grid = grids.grid_2d(**config['grid'])
-    imaging_lens = lens.thin_lens(**config['lens'])
-    turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
-    channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
+    grid = grids.Grid2D(**config['grid'])
+    imaging_lens = lens.ThinLens(**config['lens'])
+    turb = phase_screen.Kolmogorov(grid, **config['turbulence']['kolmogorov'])
+    channel = atmosphere.Channel(turb, **config['turbulence']['atmosphere'])
     target = reflector.get_reflector(grid, **config['reflector'])
-    beam = beams.gaussian(grid, **config['beam'])
+    beam = beams.Gaussian(grid, **config['beam'])
 
-    gauss_filter = spatial_filter.gaussian(
+    gauss_filter = spatial_filter.Gaussian(
         grid,
         config['beam']['spot_size'],
         config['beam']['radius'],
         np.inf,
         beam.get_wavenumber())
 
-    slm = adaptive_optics.spatial_light_modulator(
+    slm = adaptive_optics.SpatialLightModulator(
         grid,
         **config['spatial_light_modulator'])
 
-    spgd = adaptive_optics.stochastic_parallel_gradient_descent(
+    spgd = adaptive_optics.StochasticParallelGradientDescent(
         parameter_count=slm.get_parameter_count(),
         **config['stochastic_parallel_gradient_descent'])
 
@@ -79,16 +79,16 @@ def reciprocity_experiment(config_path, instances, save_dir, save_interval):
     for index in tqdm.tqdm(range(instances)):
         spgd.new_perturbation()
 
-        optical_config['beam'] = beams.gaussian(grid, **config['beam'])
+        optical_config['beam'] = beams.Gaussian(grid, **config['beam'])
         slm.update_parameters(spgd.get_positive_perturbation())
         detector_plus, _ = double_pass(**optical_config)
 
-        optical_config['beam'] = beams.gaussian(grid, **config['beam'])
+        optical_config['beam'] = beams.Gaussian(grid, **config['beam'])
         slm.update_parameters(spgd.get_negative_perturbation())
         detector_minus, _ = double_pass(**optical_config)
 
         spgd.update_parameters(detector_plus, detector_minus)
-        optical_config['beam'] = beams.gaussian(grid, **config['beam'])
+        optical_config['beam'] = beams.Gaussian(grid, **config['beam'])
         slm.update_parameters(spgd.parameters)
         detector_value, target_intensity = double_pass(**optical_config)
 

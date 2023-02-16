@@ -13,10 +13,10 @@ def single_pass_experiment(config_path):
     with open(args.config_path) as file_stream:
         config = yaml.safe_load(file_stream)
 
-    grid = grids.grid_2d(**config['grid'])
-    beam = beams.gaussian(grid, **config['beam'])
-    turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
-    channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
+    grid = grids.Grid2D(**config['grid'])
+    beam = beams.Gaussian(grid, **config['beam'])
+    turb = phase_screen.Kolmogorov(grid, **config['turbulence']['kolmogorov'])
+    channel = atmosphere.Channel(turb, **config['turbulence']['atmosphere'])
 
     channel.forward(beam, progress_bar=True)
     intensity = beam.get_intensity()

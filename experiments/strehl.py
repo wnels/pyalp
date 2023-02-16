@@ -2,7 +2,7 @@ import argparse
 import numpy as np
 import yaml
 
-from pyalp.beams import gaussian
+from pyalp.beams import beams
 from pyalp.diagnostics import display
 from pyalp.domain import grids
 
@@ -13,8 +13,8 @@ def strehl_experiment(config_path):
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)
 
-    grid = grids.grid_2d(**config['grid'])
-    beam = guassian.gaussian(grid, **config['beam'])
+    grid = grids.Grid2D(**config['grid'])
+    beam = beams.Gaussian(grid, **config['beam'])
 
     intensity0 = beam.get_intensity()
     beam.propagate(config['beam']['focus'])

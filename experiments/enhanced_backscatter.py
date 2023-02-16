@@ -15,15 +15,15 @@ def double_pass_experiment(config_path, instances):
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)
 
-    grid = grids.grid_2d(**config['grid'])
-    imaging_lens = lens.thin_lens(**config['lens'])
+    grid = grids.Grid2D(**config['grid'])
+    imaging_lens = lens.ThinLens(**config['lens'])
     target = reflector.get_reflector(grid, **config['reflector'])
 
     avg_intensity = np.zeros_like(grid.x_matrix)
     for _ in tqdm.tqdm(range(instances)):
-        beam = beams.gaussian(grid, **config['beam'])
-        turb = phase_screen.kolmogorov(grid, **config['turbulence']['kolmogorov'])
-        channel = atmosphere.channel(turb, **config['turbulence']['atmosphere'])
+        beam = beams.Gaussian(grid, **config['beam'])
+        turb = phase_screen.Kolmogorov(grid, **config['turbulence']['kolmogorov'])
+        channel = atmosphere.Channel(turb, **config['turbulence']['atmosphere'])
 
         channel.forward(beam)
         target.propagate(beam)

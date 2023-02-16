@@ -13,8 +13,8 @@ def rayleigh_vacuum_experiment(config_path, write_plot=False):
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)
 
-    grid = grids.grid_2d(**config['grid'])
-    beam = beams.gaussian(grid, **config['beam'])
+    grid = grids.Grid2D(**config['grid'])
+    beam = beams.Gaussian(grid, **config['beam'])
 
     rayleigh_length = 0.5 * beam.get_wavenumber() * beam.spot_size**2
 

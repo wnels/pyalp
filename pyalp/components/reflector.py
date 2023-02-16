@@ -7,21 +7,21 @@ from pyalp.components import spatial_filter
 #------------------------------------------------------------------------------
 def get_reflector(grid, reflector_type, radius=None):
     if reflector_type.lower() == "mirror":
-        return mirror(grid, radius)
+        return Mirror(grid, radius)
     elif reflector_type.lower() == "rough":
-        return rough(grid)
+        return Rough(grid)
     elif reflector_type.lower() == "cornercube":
-        return cornercube(grid, radius)
+        return Cornercube(grid, radius)
     else:
         raise Exception(f"reflector type {reflector_type} not supported")
 
 #==============================================================================
 #==============================================================================
-class mirror:
+class Mirror:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
     def __init__(self, grid, radius):
-        self.aperture = spatial_filter.tophat(grid, radius)
+        self.aperture = spatial_filter.Tophat(grid, radius)
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ class mirror:
 
 #==============================================================================
 #==============================================================================
-class rough:
+class Rough:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
     def __init__(self, grid):
@@ -50,11 +50,11 @@ class rough:
 
 #==============================================================================
 #==============================================================================
-class cornercube:
+class Cornercube:
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------
     def __init__(self, grid, radius):
-        self.aperture = spatial_filter.tophat(grid, radius)
+        self.aperture = spatial_filter.Tophat(grid, radius)
 
     #--------------------------------------------------------------------------
     #--------------------------------------------------------------------------

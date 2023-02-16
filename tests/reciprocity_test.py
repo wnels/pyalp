@@ -14,11 +14,11 @@ def reciprocity_experiment(config_path, instances):
     with open(config_path) as file_stream:
         config = yaml.safe_load(file_stream)
 
-    grid = grids.grid_2d(**config['grid'])
-    imaging_lens = lens.thin_lens(**config['lens'])
-    beam = beams.gaussian(grid, **config['beam'])
+    grid = grids.Grid2D(**config['grid'])
+    imaging_lens = lens.ThinLens(**config['lens'])
+    beam = beams.Gaussian(grid, **config['beam'])
 
-    gauss_filter = spatial_filter.gaussian(
+    gauss_filter = spatial_filter.Gaussian(
         grid,
         config['beam']['spot_size'],
         config['beam']['radius'],
@@ -30,15 +30,15 @@ def reciprocity_experiment(config_path, instances):
 
     for index in tqdm.tqdm(range(instances)):
 
-        turb = phase_screen.kolmogorov(
+        turb = phase_screen.Kolmogorov(
             grid,
             **config['turbulence']['kolmogorov'])
 
-        channel = atmosphere.channel(
+        channel = atmosphere.Channel(
             turb,
             **config['turbulence']['atmosphere'])
 
-        beam = beams.gaussian(grid, **config['beam'])
+        beam = beams.Gaussian(grid, **config['beam'])
 
         channel.forward(beam)
         target_values[index] = np.sum(np.square(beam.x_field))
